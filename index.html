@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valeria ❤️</title>
+  <title>1 Año ❤️</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -510,13 +510,10 @@
       <p class="stats-sub reveal">M&eacute;tricas de nuestro primer a&ntilde;o</p>
       <div class="stats-grid">
         <div class="stat-card reveal-scale"><div class="stat-icon">📅</div><div class="stat-number" data-target="365">0</div><div class="stat-label">D&iacute;as juntos</div></div>
-        <div class="stat-card reveal-scale"><div class="stat-icon">📸</div><div class="stat-number" data-target="423">0</div><div class="stat-label">Fotos tomadas</div></div>
-        <div class="stat-card reveal-scale"><div class="stat-icon">✈️</div><div class="stat-number" data-target="3">0</div><div class="stat-label">Viajes</div></div>
-        <div class="stat-card reveal-scale"><div class="stat-icon">🍰</div><div class="stat-number" data-target="28">0</div><div class="stat-label">Postres compartidos</div></div>
-        <div class="stat-card reveal-scale"><div class="stat-icon">💋</div><div class="stat-number infinity" id="infinityBtn">∞</div><div class="stat-label">Besos</div></div>
+        <div class="stat-card reveal-scale"><div class="stat-icon">📸</div><div class="stat-number" data-target="999">0</div><div class="stat-label">Fotos tomadas</div></div>
+        <div class="stat-card reveal-scale"><div class="stat-icon">🍰</div><div class="stat-number" data-target="999">0</div><div class="stat-label">Postres compartidos</div></div>
         <div class="stat-card reveal-scale"><div class="stat-icon">🤗</div><div class="stat-number" data-target="9999">∞</div><div class="stat-label">Abrazos — insuficientes 💔</div></div>
         <div class="stat-card reveal-scale"><div class="stat-icon">😂</div><div class="stat-number" data-target="12487">0</div><div class="stat-label">Risas compartidas</div></div>
-        <div class="stat-card reveal-scale"><div class="stat-icon">📺</div><div class="stat-number" data-target="7">0</div><div class="stat-label">Series maratoneadas</div></div>
       </div>
     </section>
 
@@ -543,9 +540,9 @@
         <div class="flip-card"><div class="flip-inner"><div class="flip-front">❓<span>Raz&oacute;n #4</span></div><div class="flip-back">Cuando hablas de lo que te apasiona</div></div></div>
         <div class="flip-card"><div class="flip-inner"><div class="flip-front">❓<span>Raz&oacute;n #5</span></div><div class="flip-back">Tus abrazos que todo lo curan</div></div></div>
         <div class="flip-card"><div class="flip-inner"><div class="flip-front">❓<span>Raz&oacute;n #6</span></div><div class="flip-back">Tu inteligencia me asombra cada d&iacute;a</div></div></div>
-        <div class="flip-card"><div class="flip-inner"><div class="flip-front">❓<span>Raz&oacute;n #7</span></div><div class="flip-back">C&oacute;mo bailas como si nadie mirara</div></div></div>
+        <div class="flip-card"><div class="flip-inner"><div class="flip-front">❓<span>Raz&oacute;n #7</span></div><div class="flip-back">Lo especial que me haces sentir.</div></div></div>
         <div class="flip-card"><div class="flip-inner"><div class="flip-front">❓<span>Raz&oacute;n #8</span></div><div class="flip-back">Tus ocurrencias que me hacen re&iacute;r</div></div></div>
-        <div class="flip-card"><div class="flip-inner"><div class="flip-front">❓<span>Raz&oacute;n #9</span></div><div class="flip-back">Cuando te da sue&ntilde;o y dices cosas sin sentido</div></div></div>
+        <div class="flip-card"><div class="flip-inner"><div class="flip-front">❓<span>Raz&oacute;n #9</span></div><div class="flip-back">Cuando con cada detalle me demuestras tu amor</div></div></div>
         <div class="flip-card"><div class="flip-inner"><div class="flip-front">❓<span>Raz&oacute;n #10</span></div><div class="flip-back">Tu forma de querer, intensa y sincera</div></div></div>
         <div class="flip-card"><div class="flip-inner"><div class="flip-front">❓<span>Raz&oacute;n #11</span></div><div class="flip-back">C&oacute;mo me entiendes sin que hable</div></div></div>
         <div class="flip-card"><div class="flip-inner"><div class="flip-front">❓<span>Raz&oacute;n #12</span></div><div class="flip-back">Todo de ti. Simplemente &lt;3</div></div></div>
@@ -679,7 +676,7 @@
       function startLoader() {
         loader.style.display = 'flex';
         loader.classList.add('active');
-        const texts = ['Initializando...','Loading memories...','Conectando con mi persona favorita...'];
+        const texts = ['Inicializando...','Loading memories...','Conectando con mi persona favorita...'];
         const bar = document.getElementById('loaderBar');
         const pct = document.getElementById('loaderPct');
         const textEl = document.getElementById('loaderText');
@@ -745,7 +742,6 @@
 
         // ---- Infinity easter egg ----
         let ic = 0;
-        document.getElementById('infinityBtn').addEventListener('click', function() { ic++; if (ic === 3) { showAchievement('🏆', 'Best Girlfriend Ever', 'Encontraste el easter egg del infinito!'); startConfetti(); ic = 0; } });
 
         // ---- Scroll reveal ----
         const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
