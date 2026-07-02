@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valeria ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Inter',sans-serif;
+      background:#0a0a0f;
+      color:#f1f5f9;
+      overflow-x:hidden;
+      line-height:1.6
+    }
+    h1,h2,h3{font-family:'Playfair Display',serif}
+    .code,.terminal-body,.system-text{font-family:'Fira Code',monospace}
+    ::-webkit-scrollbar{width:6px}
+    ::-webkit-scrollbar-track{background:#0a0a0f}
+    ::-webkit-scrollbar-thumb{background:#ff6b9d;border-radius:3px}
+
+    /* =============== GATE =============== */
+    #gate{
+      position:fixed;inset:0;z-index:9999;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      background:#0a0a0f;text-align:center;padding:24px;
+      opacity:1;transition:opacity .8s
+    }
+    #gate.hidden{opacity:0;pointer-events:none}
+    .gate-404{
+      font-size:clamp(80px,20vw,180px);font-weight:900;
+      font-family:'Playfair Display',serif;
+      background:linear-gradient(135deg,#ff6b9d,#c084fc,#fbbf24);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;
+      animation:glitch 3s infinite;position:relative
+    }
+    .gate-404::before,.gate-404::after{
+      content:'404';position:absolute;top:0;left:0;width:100%;height:100%;
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;opacity:0
+    }
+    .gate-404::before{
+      background:linear-gradient(135deg,#ff6b9d,#c084fc);
+      animation:glitch-offset 2s infinite linear alternate-reverse
+    }
+    .gate-404::after{
+      background:linear-gradient(135deg,#fbbf24,#ff6b9d);
+      animation:glitch-offset 3s infinite linear alternate-reverse
+    }
+    .gate-sub{font-size:clamp(18px,4vw,32px);margin-top:16px;opacity:.9}
+    .gate-sub2{font-size:clamp(14px,2.5vw,20px);margin-top:8px;opacity:.6}
+    .gate-hint{font-size:14px;margin-top:32px;opacity:.3;animation:pulse 3s infinite}
+    .gate-heart{position:absolute;font-size:20px;animation:float-heart 6s infinite;opacity:.15}
+    .gate-heart:nth-child(2){top:15%;left:20%;animation-delay:-2s;font-size:16px}
+    .gate-heart:nth-child(3){top:70%;right:15%;animation-delay:-4s;font-size:24px}
+    .gate-heart:nth-child(4){top:40%;right:25%;animation-delay:-1s;font-size:14px}
+
+    /* =============== LOADER =============== */
+    #loader{
+      position:fixed;inset:0;z-index:9998;
+      display:none;flex-direction:column;align-items:center;justify-content:center;
+      background:#0a0a0f;text-align:center;padding:24px;
+      transition:opacity .8s
+    }
+    #loader.active{display:flex}
+    #loader.fade-out{opacity:0}
+    .loader-heart{font-size:48px;margin-bottom:32px;animation:heartbeat 1s infinite}
+    .loader-text{font-family:'Fira Code',monospace;font-size:clamp(14px,3vw,20px);min-height:30px;margin-bottom:24px}
+    .loader-bar-wrap{width:min(300px,80vw);height:4px;background:#1e1e2e;border-radius:4px;overflow:hidden}
+    .loader-bar{height:100%;width:0%;background:linear-gradient(90deg,#ff6b9d,#c084fc);border-radius:4px;transition:width .3s}
+    .loader-pct{font-family:'Fira Code',monospace;font-size:14px;margin-top:8px;opacity:.5}
+
+    /* =============== REVEAL =============== */
+    .reveal{
+      opacity:0;transform:translateY(50px);transition:opacity .8s ease,transform .8s ease
+    }
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-left{
+      opacity:0;transform:translateX(-80px);transition:opacity .8s ease,transform .8s ease
+    }
+    .reveal-left.visible{opacity:1;transform:translateX(0)}
+    .reveal-right{
+      opacity:0;transform:translateX(80px);transition:opacity .8s ease,transform .8s ease
+    }
+    .reveal-right.visible{opacity:1;transform:translateX(0)}
+    .reveal-scale{
+      opacity:0;transform:scale(.8);transition:opacity .8s ease,transform .8s ease
+    }
+    .reveal-scale.visible{opacity:1;transform:scale(1)}
+
+    /* =============== WELCOME =============== */
+    #welcome{
+      min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;padding:80px 24px;position:relative;overflow:hidden
+    }
+    .welcome-heart{
+      font-size:clamp(48px,10vw,80px);margin-bottom:32px;cursor:pointer;
+      animation:heartbeat 1.5s infinite;transition:transform .3s
+    }
+    .welcome-heart:hover{transform:scale(1.2)}
+    .welcome-heart.clicked{animation:heartburst .5s}
+    .welcome-title{font-size:clamp(28px,6vw,64px);margin-bottom:24px;min-height:1.2em}
+    .welcome-title .cursor-blink{animation:blink .8s infinite}
+    .welcome-sub{
+      font-size:clamp(14px,2.5vw,20px);max-width:600px;opacity:0;
+      transition:opacity 1s ease;line-height:1.8
+    }
+    .welcome-sub.show{opacity:.85}
+    .welcome-sub em{color:#ff6b9d;font-style:normal}
+    .bg-particles{
+      position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0
+    }
+    .bg-particle{
+      position:absolute;font-size:12px;animation:float-particle 20s infinite;opacity:.08
+    }
+
+    /* =============== TIMELINE =============== */
+    #timeline{
+      padding:100px 24px;position:relative
+    }
+    #timeline h2{
+      text-align:center;font-size:clamp(28px,5vw,48px);margin-bottom:64px
+    }
+    #timeline h2 span{background:linear-gradient(135deg,#ff6b9d,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .timeline-line{
+      position:absolute;left:50%;top:180px;width:2px;height:0;
+      background:linear-gradient(180deg,#ff6b9d,#c084fc);
+      transform:translateX(-50%);
+      transition:height 1.8s cubic-bezier(.22,1,.36,1)
+    }
+    .timeline-item{
+      display:flex;align-items:flex-start;margin-bottom:80px;position:relative
+    }
+    .timeline-item:nth-child(odd){flex-direction:row}
+    .timeline-item:nth-child(even){flex-direction:row-reverse}
+    .timeline-content{
+      width:42%;padding:24px;background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);border-radius:16px;
+      transition:border-color .3s
+    }
+    .timeline-content:hover{border-color:rgba(255,107,157,.3)}
+    .timeline-icon{
+      position:absolute;left:50%;transform:translateX(-50%);
+      width:44px;height:44px;border-radius:50%;
+      background:linear-gradient(135deg,#ff6b9d,#c084fc);
+      display:flex;align-items:center;justify-content:center;font-size:18px;z-index:2;
+      box-shadow:0 0 20px rgba(255,107,157,.3)
+    }
+    .timeline-date{font-size:13px;color:#ff6b9d;font-weight:600;margin-bottom:4px}
+    .timeline-content h3{font-size:clamp(18px,2.5vw,24px);margin-bottom:8px}
+    .timeline-content p{font-size:14px;opacity:.7;line-height:1.7}
+    .photo-placeholder{
+      width:100%;height:160px;border-radius:12px;margin:12px 0;
+      background:linear-gradient(135deg,rgba(255,107,157,.2),rgba(192,132,252,.2));
+      border:2px dashed rgba(255,255,255,.1);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:8px;color:rgba(255,255,255,.3);font-size:13px;cursor:pointer;
+      transition:all .3s;overflow:hidden
+    }
+    .photo-placeholder:hover{border-color:rgba(255,107,157,.4);background:rgba(255,107,157,.1)}
+    .photo-placeholder i{font-size:28px;opacity:.5}
+    .photo-placeholder img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+
+    /* =============== STATS =============== */
+    #stats{
+      padding:100px 24px;position:relative
+    }
+    #stats h2{
+      text-align:center;font-size:clamp(28px,5vw,48px);margin-bottom:12px
+    }
+    #stats h2 span{background:linear-gradient(135deg,#fbbf24,#ff6b9d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .stats-sub{text-align:center;font-size:14px;opacity:.4;margin-bottom:48px}
+    .stats-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:20px;max-width:800px;margin:0 auto
+    }
+    .stat-card{
+      background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+      border-radius:16px;padding:32px 20px;text-align:center;
+      transition:all .3s
+    }
+    .stat-card:hover{
+      border-color:rgba(255,107,157,.3);transform:translateY(-4px);
+      box-shadow:0 12px 40px rgba(255,107,157,.1)
+    }
+    .stat-icon{font-size:32px;margin-bottom:12px}
+    .stat-number{
+      font-size:clamp(32px,5vw,48px);font-weight:700;
+      background:linear-gradient(135deg,#f1f5f9,#c084fc);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text
+    }
+    .stat-number.infinity{font-size:clamp(40px,6vw,56px)}
+    .stat-number.infinity{cursor:pointer;position:relative}
+    .stat-label{font-size:14px;opacity:.6;margin-top:4px}
+
+    /* =============== TERMINAL =============== */
+    #terminal-section{
+      padding:100px 24px
+    }
+    #terminal-section h2{
+      text-align:center;font-size:clamp(28px,5vw,48px);margin-bottom:48px
+    }
+    #terminal-section h2 span{color:#c084fc}
+    .terminal-window{
+      max-width:600px;margin:0 auto;
+      background:#12121a;border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)
+    }
+    .terminal-header{
+      display:flex;align-items:center;gap:8px;
+      padding:14px 20px;background:rgba(255,255,255,.03);
+      border-bottom:1px solid rgba(255,255,255,.06)
+    }
+    .terminal-dot{width:12px;height:12px;border-radius:50%}
+    .terminal-dot:nth-child(1){background:#ff5f57}
+    .terminal-dot:nth-child(2){background:#febc2e}
+    .terminal-dot:nth-child(3){background:#28c840}
+    .terminal-title{font-size:13px;opacity:.4;margin-left:8px}
+    .terminal-body{
+      padding:24px;font-family:'Fira Code',monospace;font-size:14px;line-height:1.8
+    }
+    .terminal-output{min-height:120px;max-height:320px;overflow-y:auto}
+    .terminal-line{opacity:0;animation:fadeIn .3s forwards;margin-bottom:4px}
+    .terminal-line .prompt{color:#ff6b9d;font-weight:500}
+    .terminal-line .cmd{color:#f1f5f9}
+    .terminal-line .response{color:#c084fc}
+    .terminal-line .error{color:#ff5f57}
+    .terminal-line .success{color:#28c840}
+    .terminal-input-line{display:flex;align-items:center;gap:8px;margin-top:12px}
+    .terminal-input-line .prompt{color:#ff6b9d;font-weight:500}
+    .terminal-input{
+      background:none;border:none;outline:none;color:#f1f5f9;
+      font-family:'Fira Code',monospace;font-size:14px;flex:1;caret-color:#ff6b9d
+    }
+    .terminal-input::placeholder{color:rgba(255,255,255,.15)}
+
+    /* =============== HIDDEN BUTTON =============== */
+    #hidden-section{
+      padding:100px 24px;text-align:center
+    }
+    .btn-no{
+      display:inline-block;padding:18px 48px;font-size:20px;
+      background:linear-gradient(135deg,#ff6b9d,#c084fc);
+      border:none;border-radius:12px;color:#fff;cursor:pointer;
+      font-family:'Playfair Display',serif;
+      animation:shake-tempt 3s infinite;position:relative;
+      box-shadow:0 0 30px rgba(255,107,157,.2);
+      transition:all .3s
+    }
+    .btn-no:hover{animation:none;transform:scale(1.05);box-shadow:0 0 50px rgba(255,107,157,.4)}
+    .btn-no.pressed{animation:none;background:linear-gradient(135deg,#fbbf24,#ff6b9d);cursor:default;transform:scale(1)}
+    .hidden-response{
+      margin-top:24px;font-size:clamp(18px,3vw,28px);
+      font-family:'Playfair Display',serif;
+      opacity:0;transition:opacity .8s
+    }
+    .hidden-response.show{opacity:1}
+    .hidden-response i{color:#ff6b9d}
+
+    /* =============== LETTER =============== */
+    #letter{
+      padding:100px 24px;text-align:center
+    }
+    .letter-card{
+      max-width:500px;margin:0 auto;
+      background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+      border-radius:20px;padding:48px 32px;position:relative;overflow:hidden
+    }
+    .letter-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      background:linear-gradient(90deg,#ff6b9d,#c084fc,#fbbf24)
+    }
+    .letter-icon{font-size:48px;margin-bottom:20px;animation:float 4s ease-in-out infinite}
+    .letter-card h2{font-size:clamp(24px,4vw,36px);margin-bottom:16px}
+    .letter-card p{font-size:15px;opacity:.7;line-height:1.8;max-width:400px;margin:0 auto}
+
+    /* =============== FUTURE =============== */
+    #future{
+      padding:100px 24px
+    }
+    #future h2{
+      text-align:center;font-size:clamp(28px,5vw,48px);margin-bottom:12px
+    }
+    #future h2 span{color:#fbbf24}
+    .future-sub{text-align:center;font-size:14px;opacity:.4;margin-bottom:48px}
+    .checklist{max-width:420px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+    .checklist-item{
+      display:flex;align-items:center;gap:16px;
+      padding:16px 20px;background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);border-radius:12px;
+      cursor:pointer;transition:all .3s
+    }
+    .checklist-item:hover{border-color:rgba(255,255,255,.12)}
+    .checklist-item.completed{opacity:.5}
+    .checklist-item.completed .check-box{background:#28c840;border-color:#28c840}
+    .check-box{
+      width:24px;height:24px;border:2px solid rgba(255,255,255,.2);
+      border-radius:6px;display:flex;align-items:center;justify-content:center;
+      font-size:12px;color:#fff;transition:all .3s;flex-shrink:0
+    }
+    .check-label{font-size:15px}
+
+    /* =============== SYSTEM STATUS =============== */
+    #system{
+      padding:100px 24px;text-align:center
+    }
+    #system h2{font-size:clamp(28px,5vw,48px);margin-bottom:48px}
+    .system-box{
+      max-width:500px;margin:0 auto;
+      background:#12121a;border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;padding:40px 32px;font-family:'Fira Code',monospace;
+      box-shadow:0 20px 60px rgba(0,0,0,.5)
+    }
+    .system-line{
+      font-size:clamp(13px,2vw,16px);margin-bottom:12px;text-align:left;
+      opacity:0;letter-spacing:.5px;transition:opacity .5s ease
+    }
+    .system-line .label{color:#888899}
+    .system-line .status-found{color:#28c840}
+    .system-line .status-heart{color:#ff6b9d}
+    .system-line .version{color:#fbbf24;font-weight:500}
+    .system-line .next{color:#c084fc}
+    .system-glitch{animation:glitch-text .5s infinite}
+
+    /* =============== DEPLOY =============== */
+    #deploy{
+      padding:100px 24px;text-align:center
+    }
+    .btn-deploy{
+      display:inline-block;padding:24px 60px;font-size:clamp(18px,3vw,28px);
+      font-weight:700;font-family:'PlayFair Display',serif;
+      background:linear-gradient(135deg,#ff6b9d,#c084fc);
+      border:none;border-radius:16px;color:#fff;cursor:pointer;
+      box-shadow:0 0 40px rgba(255,107,157,.3);
+      transition:all .4s;position:relative;overflow:hidden
+    }
+    .btn-deploy:hover{
+      transform:scale(1.08);box-shadow:0 0 80px rgba(255,107,157,.5)
+    }
+    .btn-deploy:active{transform:scale(.95)}
+    .btn-deploy .btn-shimmer{
+      position:absolute;top:0;left:-100%;width:100%;height:100%;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
+      animation:shimmer 3s infinite
+    }
+    .changelog{
+      max-width:500px;margin:40px auto 0;
+      opacity:0;transform:translateY(30px);
+      transition:all .8s;pointer-events:none
+    }
+    .changelog.show{opacity:1;transform:translateY(0)}
+    .changelog h3{font-size:clamp(20px,3vw,32px);margin-bottom:24px;color:#fbbf24}
+    .changelog-item{
+      font-size:18px;padding:10px 0;
+      opacity:0;transform:translateX(-20px);
+      transition:all .5s;display:flex;align-items:center;gap:12px;justify-content:center
+    }
+    .changelog-item.show{opacity:1;transform:translateX(0)}
+    .changelog-item i{color:#28c840;font-size:16px}
+    .changelog-release{
+      margin-top:24px;font-size:16px;opacity:.5;
+      font-family:'Fira Code',monospace
+    }
+
+    /* =============== ACHIEVEMENT TOAST =============== */
+    .toast-container{
+      position:fixed;top:24px;right:24px;z-index:99999;
+      display:flex;flex-direction:column;gap:12px;pointer-events:none
+    }
+    .toast{
+      background:rgba(18,18,26,.95);border:1px solid rgba(255,107,157,.3);
+      border-radius:12px;padding:16px 24px;
+      display:flex;align-items:center;gap:12px;
+      transform:translateX(120%);opacity:0;
+      transition:all .6s cubic-bezier(.22,1,.36,1);
+      pointer-events:auto;backdrop-filter:blur(10px)
+    }
+    .toast.show{transform:translateX(0);opacity:1}
+    .toast-icon{font-size:24px;animation:heartbeat 1s infinite}
+    .toast-text{font-size:14px}
+    .toast-text strong{color:#ff6b9d}
+    .toast-sub{font-size:12px;opacity:.5;margin-top:2px}
+
+    /* =============== CONFETTI =============== */
+    .confetti-container{
+      position:fixed;inset:0;pointer-events:none;z-index:99998;overflow:hidden
+    }
+    .confetti-piece{
+      position:absolute;width:10px;height:10px;top:-10px;
+      animation:confetti-fall linear forwards
+    }
+
+    /* =============== HEART RAIN =============== */
+    .heart-rain-container{
+      position:fixed;inset:0;pointer-events:none;z-index:99997;overflow:hidden
+    }
+    .heart-drop{
+      position:absolute;font-size:24px;top:-40px;
+      animation:heart-fall linear forwards;opacity:.7
+    }
+
+    /* =============== ANIMATIONS =============== */
+    @keyframes heartbeat{
+      0%,100%{transform:scale(1)}
+      15%{transform:scale(1.2)}
+      30%{transform:scale(1)}
+      45%{transform:scale(1.15)}
+      60%{transform:scale(1)}
+    }
+    @keyframes heartburst{
+      0%{transform:scale(1)}
+      50%{transform:scale(1.5);opacity:.5}
+      100%{transform:scale(1);opacity:1}
+    }
+    @keyframes blink{50%{opacity:0}}
+    @keyframes fadeIn{to{opacity:1}}
+    @keyframes pulse{0%,100%{opacity:.3}50%{opacity:.6}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes float-heart{
+      0%,100%{transform:translate(0,0) rotate(0deg)}
+      33%{transform:translate(30px,-30px) rotate(5deg)}
+      66%{transform:translate(-20px,-60px) rotate(-3deg)}
+    }
+    @keyframes float-particle{
+      0%,100%{transform:translateY(0) rotate(0deg);opacity:.08}
+      50%{transform:translateY(-100vh) rotate(180deg);opacity:.02}
+    }
+    @keyframes shake-tempt{
+      0%,100%{transform:translateX(0)}
+      10%{transform:translateX(-4px) rotate(-1deg)}
+      20%{transform:translateX(4px) rotate(1deg)}
+      30%{transform:translateX(-4px) rotate(-1deg)}
+      40%{transform:translateX(4px) rotate(1deg)}
+      50%{transform:translateX(0)}
+      90%{transform:translateX(0)}
+    }
+    @keyframes glitch{
+      2%,64%{transform:translate(2px,0) skew(0deg)}
+      4%,60%{transform:translate(-2px,0) skew(0deg)}
+      62%{transform:translate(0,0) skew(5deg)}
+    }
+    @keyframes glitch-offset{
+      0%{opacity:0;transform:translate(0)}
+      20%{opacity:.7;transform:translate(-3px,2px)}
+      40%{opacity:0;transform:translate(3px,-2px)}
+      60%{opacity:.3;transform:translate(-2px,-1px)}
+      80%{opacity:0;transform:translate(2px,1px)}
+      100%{opacity:.5;transform:translate(-1px,2px)}
+    }
+    @keyframes glitch-text{
+      0%,100%{opacity:1;transform:translate(0)}
+      20%{opacity:.8;transform:translate(-2px,1px)}
+      40%{opacity:.9;transform:translate(2px,-1px)}
+      60%{opacity:.7;transform:translate(-1px,-1px)}
+      80%{opacity:.9;transform:translate(1px,1px)}
+    }
+    @keyframes shimmer{
+      0%{left:-100%}
+      100%{left:200%}
+    }
+    @keyframes confetti-fall{
+      0%{transform:translateY(0) rotate(0deg);opacity:1}
+      100%{transform:translateY(110vh) rotate(720deg);opacity:0}
+    }
+    @keyframes heart-fall{
+      0%{transform:translateY(0) rotate(0deg);opacity:.7}
+      100%{transform:translateY(110vh) rotate(360deg);opacity:0}
+    }
+    @keyframes scaleIn{
+      from{transform:scale(0);opacity:0}
+      to{transform:scale(1);opacity:1}
+    }
+
+    /* =============== RESPONSIVE =============== */
+    @media(max-width:768px){
+      .timeline-line{left:20px}
+      .timeline-item,.timeline-item:nth-child(even){flex-direction:row!important}
+      .timeline-content{width:calc(100% - 50px);margin-left:50px}
+      .timeline-icon{left:20px}
+      .stats-grid{grid-template-columns:repeat(2,1fr)}
+      section{padding:60px 16px}
+      .terminal-body{padding:16px;font-size:13px}
+      .letter-card{padding:32px 20px}
+      .btn-deploy{padding:20px 40px}
+      .system-box{padding:28px 20px}
+      .toast-container{left:16px;right:16px}
+      .toast{width:100%}
+    }
+    @media(max-width:480px){
+      .stats-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+      .stat-card{padding:24px 12px}
+      .stat-icon{font-size:24px}
+    }
+  </style>
+</head>
+<body>
+  <!-- =============== GATE =============== -->
+  <div id="gate">
+    <div class="gate-heart">❤️</div>
+    <div class="gate-heart">💖</div>
+    <div class="gate-heart">💕</div>
+    <div class="gate-heart">✨</div>
+    <div class="gate-404">404</div>
+    <div class="gate-sub">Todavía no...</div>
+    <div class="gate-sub2">Vuelve dentro de la caja.</div>
+    <div class="gate-hint">✧ Busca bien... hay algo más ✧</div>
+  </div>
+
+  <!-- =============== LOADER =============== -->
+  <div id="loader">
+    <div class="loader-heart">💖</div>
+    <div class="loader-text" id="loaderText"></div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar" id="loaderBar"></div>
+    </div>
+    <div class="loader-pct" id="loaderPct">0%</div>
+  </div>
+
+  <!-- =============== MAIN APP =============== -->
+  <main id="app">
+
+    <!-- WELCOME -->
+    <section id="welcome">
+      <div class="bg-particles" id="bgParticles"></div>
+      <div class="welcome-heart" id="welcomeHeart">❤️</div>
+      <h1 class="welcome-title" id="welcomeTitle"></h1>
+      <div class="welcome-sub" id="welcomeSub">
+        Pensé que un <em>primer aniversario</em> merecía algo hecho por mí.<br>
+        Así que, en lugar de comprarte otro regalo...<br>
+        decidí <em>programarte uno</em>. 🖤
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <h2 class="reveal">Nuestra <span>historia</span></h2>
+      <div class="timeline-line" id="timelineLine"></div>
+
+      <div class="timeline-item reveal-left">
+        <div class="timeline-icon">📍</div>
+        <div class="timeline-content">
+          <div class="timeline-date">[FECHA]</div>
+          <h3>Nos conocimos</h3>
+          <!-- 🖼️ REEMPLAZA EL DIV .photo-placeholder CON TU FOTO:
+          <img src="ruta/nos-conocimos.jpg" alt="Nos conocimos" style="width:100%;height:160px;object-fit:cover;border-radius:12px"> -->
+          <div class="photo-placeholder">
+            <i class="fas fa-heart"></i>
+            <span>Tu foto aquí</span>
+          </div>
+          <p>El día que todo empezó. 💫</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal-right">
+        <div class="timeline-icon">💕</div>
+        <div class="timeline-content">
+          <div class="timeline-date">[FECHA]</div>
+          <h3>Primera cita</h3>
+          <div class="photo-placeholder">
+            <i class="fas fa-heart"></i>
+            <span>Tu foto aquí</span>
+          </div>
+          <p>Esa primera vez que supe que era especial. ✨</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal-left">
+        <div class="timeline-icon">✈️</div>
+        <div class="timeline-content">
+          <div class="timeline-date">[FECHA]</div>
+          <h3>Primer viaje</h3>
+          <div class="photo-placeholder">
+            <i class="fas fa-heart"></i>
+            <span>Tu foto aquí</span>
+          </div>
+          <p>Aventuras que recordaré siempre. 🌍</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal-right">
+        <div class="timeline-icon">💗</div>
+        <div class="timeline-content">
+          <div class="timeline-date">[FECHA]</div>
+          <h3>Primer "te amo"</h3>
+          <div class="photo-placeholder">
+            <i class="fas fa-heart"></i>
+            <span>Tu foto aquí</span>
+          </div>
+          <p>Tres palabras que cambiaron todo. 💌</p>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal-left">
+        <div class="timeline-icon">🎂</div>
+        <div class="timeline-content">
+          <div class="timeline-date">[FECHA — HOY]</div>
+          <h3>Nuestro primer aniversario</h3>
+          <div class="photo-placeholder">
+            <i class="fas fa-heart"></i>
+            <span>Tu foto aquí</span>
+          </div>
+          <p>365 días a tu lado. El mejor año de mi vida. ❤️</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section id="stats">
+      <h2 class="reveal">Dashboard <span>❤️</span></h2>
+      <p class="stats-sub reveal">Métricas de nuestro primer año</p>
+      <div class="stats-grid">
+        <div class="stat-card reveal-scale">
+          <div class="stat-icon">📅</div>
+          <div class="stat-number" data-target="365">0</div>
+          <div class="stat-label">Días juntos</div>
+        </div>
+        <div class="stat-card reveal-scale">
+          <div class="stat-icon">📸</div>
+          <div class="stat-number" data-target="423">0</div>
+          <div class="stat-label">Fotos tomadas</div>
+        </div>
+        <div class="stat-card reveal-scale">
+          <div class="stat-icon">✈️</div>
+          <div class="stat-number" data-target="3">0</div>
+          <div class="stat-label">Viajes</div>
+        </div>
+        <div class="stat-card reveal-scale">
+          <div class="stat-icon">🍰</div>
+          <div class="stat-number" data-target="28">0</div>
+          <div class="stat-label">Postres compartidos</div>
+        </div>
+        <div class="stat-card reveal-scale">
+          <div class="stat-icon">💋</div>
+          <div class="stat-number infinity" id="infinityBtn">∞</div>
+          <div class="stat-label">Besos</div>
+        </div>
+        <div class="stat-card reveal-scale">
+          <div class="stat-icon">🤗</div>
+          <div class="stat-number" data-target="9999">∞</div>
+          <div class="stat-label">Abrazos — Insuficientes 💔</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TERMINAL -->
+    <section id="terminal-section">
+      <h2 class="reveal">Consola de <span>comandos</span></h2>
+      <div class="terminal-window reveal-scale">
+        <div class="terminal-header">
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="terminal-title">valeria@juancalo — bash</span>
+        </div>
+        <div class="terminal-body">
+          <div class="terminal-output" id="termOutput">
+            <div class="terminal-line" style="animation-delay:.1s">
+              <span class="prompt">$</span> <span class="cmd">Bienvenida, Valeria. Escribe <span class="response">help</span> para comenzar.</span>
+            </div>
+          </div>
+          <div class="terminal-input-line">
+            <span class="prompt">$</span>
+            <input type="text" class="terminal-input" id="termInput" placeholder="Escribe un comando..." autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HIDDEN BUTTON -->
+    <section id="hidden-section">
+      <h2 class="reveal">🤫</h2>
+      <div class="reveal">
+        <button class="btn-no" id="btnNo">No presionar</button>
+      </div>
+      <div class="hidden-response" id="hiddenResponse">
+        <i class="fas fa-heart"></i> Sabía que lo ibas a hacer... <i class="fas fa-heart"></i>
+      </div>
+    </section>
+
+    <!-- LETTER -->
+    <section id="letter">
+      <div class="letter-card reveal-scale">
+        <div class="letter-icon">💌</div>
+        <h2>Una carta para ti</h2>
+        <p>
+          La carta importante no está aquí.<br>
+          Está dentro de la caja, escrita a mano, como debe ser.<br><br>
+          <em style="color:#ff6b9d">Léela al final.</em> ❤️
+        </p>
+      </div>
+    </section>
+
+    <!-- FUTURE -->
+    <section id="future">
+      <h2 class="reveal">Próximos <span>lanzamientos</span></h2>
+      <p class="future-sub reveal">Roadmap de nuestra vida juntos</p>
+      <div class="checklist reveal-scale">
+        <div class="checklist-item completed" data-checked="true">
+          <div class="check-box"><i class="fas fa-check"></i></div>
+          <span class="check-label">✅ Primer aniversario</span>
+        </div>
+        <div class="checklist-item" data-checked="false">
+          <div class="check-box"></div>
+          <span class="check-label">🏡 Vivir juntos</span>
+        </div>
+        <div class="checklist-item" data-checked="false">
+          <div class="check-box"></div>
+          <span class="check-label">🌍 Primer viaje internacional</span>
+        </div>
+        <div class="checklist-item" data-checked="false">
+          <div class="check-box"></div>
+          <span class="check-label">🗾 Conocer Japón</span>
+        </div>
+        <div class="checklist-item" data-checked="false">
+          <div class="check-box"></div>
+          <span class="check-label">🐶 Tener una mascota</span>
+        </div>
+        <div class="checklist-item" data-checked="false">
+          <div class="check-box"></div>
+          <span class="check-label">✨ Toda una vida juntos</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SYSTEM STATUS -->
+    <section id="system">
+      <h2 class="reveal">System <span style="color:#c084fc">Status</span></h2>
+      <div class="system-box reveal-scale" id="systemBox">
+        <div class="system-line">
+          <span class="label">⏳ System status</span>
+        </div>
+        <div class="system-line">
+          <span class="label">├─ Girlfriend found</span> <span class="status-found">✅</span>
+        </div>
+        <div class="system-line">
+          <span class="label">├─ Happiness detected</span> <span class="status-heart">✅</span>
+        </div>
+        <div class="system-line">
+          <span class="label">├─ Love status</span> <span class="status-heart">∞</span>
+        </div>
+        <div class="system-line">
+          <span class="label">└─ Relationship version</span> <span class="version">v1.0</span>
+        </div>
+        <div class="system-line" style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)">
+          <span class="label">📦 Next release</span> <span class="next">v2.0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEPLOY -->
+    <section id="deploy">
+      <h2 class="reveal" style="margin-bottom:32px;font-size:clamp(20px,4vw,36px);opacity:.6">
+        ¿Lista para el futuro?
+      </h2>
+      <div class="reveal-scale">
+        <button class="btn-deploy" id="btnDeploy">
+          <span class="btn-shimmer"></span>
+          🚀 Deploy Version 2.0
+        </button>
+      </div>
+      <div class="changelog" id="changelog">
+        <h3>📋 Changelog</h3>
+        <div class="changelog-item" data-delay="0"><i class="fas fa-plus-circle"></i> M&aacute;s viajes.</div>
+        <div class="changelog-item" data-delay="200"><i class="fas fa-plus-circle"></i> M&aacute;s postres.</div>
+        <div class="changelog-item" data-delay="400"><i class="fas fa-plus-circle"></i> M&aacute;s aventuras.</div>
+        <div class="changelog-item" data-delay="600"><i class="fas fa-plus-circle"></i> M&aacute;s fotos.</div>
+        <div class="changelog-item" data-delay="800"><i class="fas fa-plus-circle"></i> Much&iacute;simo m&aacute;s amor.</div>
+        <div class="changelog-release">📅 Release date: Hoy</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =============== TOAST CONTAINER =============== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- =============== CONFETTI CONTAINER =============== -->
+  <div class="confetti-container" id="confettiContainer"></div>
+
+  <!-- =============== HEART RAIN =============== -->
+  <div class="heart-rain-container" id="heartRain"></div>
+
+  <script>
+    (function(){
+      'use strict';
+
+      // =============================================
+      // 0. GATING
+      // =============================================
+      const gate = document.getElementById('gate');
+      const loader = document.getElementById('loader');
+      const app = document.getElementById('app');
+
+      const params = new URLSearchParams(window.location.search);
+      const unlocked = params.has('val') || localStorage.getItem('val-unlocked') === 'true';
+
+      if (unlocked) {
+        if (params.has('val')) localStorage.setItem('val-unlocked', 'true');
+        gate.classList.add('hidden');
+        setTimeout(() => { gate.style.display = 'none'; }, 800);
+        startLoader();
+      } else {
+        gate.style.display = 'flex';
+        loader.style.display = 'none';
+        app.style.display = 'none';
+      }
+
+      // =============================================
+      // 1. LOADER
+      // =============================================
+      function startLoader() {
+        loader.style.display = 'flex';
+        loader.classList.add('active');
+
+        const texts = [
+          'Inicializando...',
+          'Loading memories...',
+          'Conectando con mi persona favorita...',
+        ];
+        const bar = document.getElementById('loaderBar');
+        const pct = document.getElementById('loaderPct');
+        const textEl = document.getElementById('loaderText');
+        function typeText(txt, cb) {
+          let i = 0;
+          textEl.textContent = '';
+          const interval = setInterval(() => {
+            textEl.textContent += txt[i];
+            i++;
+            if (i >= txt.length) { clearInterval(interval); setTimeout(cb, 400); }
+          }, 35);
+        }
+
+        function animatePct(from, to, cb) {
+          const duration = 600;
+          const start = performance.now();
+          function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(from + (to - from) * eased);
+            bar.style.width = current + '%';
+            pct.textContent = current + '%';
+            if (progress < 1) requestAnimationFrame(tick);
+            else { bar.style.width = to + '%'; pct.textContent = to + '%'; if (cb) cb(); }
+          }
+          requestAnimationFrame(tick);
+        }
+
+        setTimeout(() => {
+          typeText(texts[0], () => {
+            animatePct(0, 30, () => {
+              typeText(texts[1], () => {
+                animatePct(30, 65, () => {
+                  typeText(texts[2], () => {
+                    animatePct(65, 90, () => {
+                      animatePct(90, 100, () => {
+                        textEl.textContent = '❤️ 100% — Bienvenida, Val ❤️';
+                        setTimeout(() => {
+                          loader.classList.add('fade-out');
+                          app.style.display = 'block';
+                          setTimeout(() => {
+                            loader.style.display = 'none';
+                            initApp();
+                          }, 800);
+                        }, 600);
+                      });
+                    });
+                  });
+                });
+              });
+            });
+          });
+        }, 500);
+      }
+
+      // =============================================
+      // 2. APP INIT
+      // =============================================
+      function initApp() {
+
+        // ---- Background particles ----
+        const bg = document.getElementById('bgParticles');
+        const particles = ['✦','✧','♥','♡','·','*','⋆','✶'];
+        for (let i = 0; i < 25; i++) {
+          const el = document.createElement('span');
+          el.className = 'bg-particle';
+          el.textContent = particles[i % particles.length];
+          el.style.left = Math.random() * 100 + '%';
+          el.style.top = Math.random() * 100 + '%';
+          el.style.fontSize = (8 + Math.random() * 12) + 'px';
+          el.style.animationDuration = (15 + Math.random() * 20) + 's';
+          el.style.animationDelay = (Math.random() * -20) + 's';
+          bg.appendChild(el);
+        }
+
+        // ---- Welcome typewriter ----
+        const titleEl = document.getElementById('welcomeTitle');
+        const subEl = document.getElementById('welcomeSub');
+        const welcomeText = 'Hola, Amor ❤️';
+        let i = 0;
+        titleEl.textContent = '';
+        const typer = setInterval(() => {
+          titleEl.textContent += welcomeText[i];
+          i++;
+          if (i >= welcomeText.length) {
+            clearInterval(typer);
+            setTimeout(() => { subEl.classList.add('show'); }, 400);
+          }
+        }, 60);
+
+        // ---- Heart click easter egg ----
+        let heartClicks = 0;
+        document.getElementById('welcomeHeart').addEventListener('click', function() {
+          this.classList.remove('clicked');
+          void this.offsetWidth;
+          this.classList.add('clicked');
+          heartClicks++;
+          if (heartClicks === 5) {
+            showAchievement('💖', 'Best Girlfriend Ever', 'Tocaste el corazón 5 veces...');
+            heartClicks = 0;
+          }
+        });
+
+        // ---- Infinity symbol easter egg ----
+        let infinityClicks = 0;
+        document.getElementById('infinityBtn').addEventListener('click', function() {
+          infinityClicks++;
+          if (infinityClicks === 3) {
+            showAchievement('🏆', 'Best Girlfriend Ever', '¡Encontraste el easter egg del infinito!');
+            startConfetti();
+            infinityClicks = 0;
+          }
+        });
+
+        // ---- Scroll reveal ----
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+          observer.observe(el);
+        });
+
+        // ---- Stats counter ----
+        const statObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const card = entry.target;
+              const numEl = card.querySelector('.stat-number');
+              if (numEl && numEl.dataset.target && !numEl.classList.contains('counted')) {
+                numEl.classList.add('counted');
+                const target = parseInt(numEl.dataset.target);
+                animateCounter(numEl, target);
+              }
+              statObserver.unobserve(card);
+            }
+          });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-card').forEach(card => statObserver.observe(card));
+
+        function animateCounter(el, target) {
+          if (target === 9999) {
+            el.textContent = '∞';
+            return;
+          }
+          const duration = 2000;
+          const start = performance.now();
+          function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(eased * target);
+            el.textContent = current;
+            if (progress < 1) requestAnimationFrame(tick);
+            else el.textContent = target;
+          }
+          requestAnimationFrame(tick);
+        }
+
+        // ---- Timeline line animation ----
+        const lineObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const line = entry.target;
+              const lastItem = document.querySelector('.timeline-item:last-child .timeline-content');
+              if (lastItem) {
+                const lineTop = line.getBoundingClientRect().top;
+                const lastBottom = lastItem.getBoundingClientRect().bottom;
+                const totalHeight = (lastBottom - lineTop) + 60;
+                line.style.height = totalHeight + 'px';
+              }
+              lineObserver.unobserve(line);
+            }
+          });
+        }, { threshold: 0.05 });
+
+        const tlLine = document.querySelector('.timeline-line');
+        if (tlLine) lineObserver.observe(tlLine);
+
+        // ---- Terminal ----
+        const termOutput = document.getElementById('termOutput');
+        const termInput = document.getElementById('termInput');
+
+        const termResponses = {
+          help: 'Comandos disponibles: <span class="response">about</span>, <span class="response">future</span>, <span class="response">photos</span>, <span class="response">love</span>, <span class="response">secret</span>',
+          about: 'Ella es Valeria. Mi próxima ingeniera. La persona más increíble que conozco. ❤️',
+          future: 'Viajes, aventuras, una casa, y toda una vida juntos. 🌍',
+          photos: 'Cada foto es un recuerdo guardado en mi corazón. 📸',
+          love: '<span class="error">Error. Love value overflow. 😂</span>',
+          secret: '<span class="success">🎉 Achievement Unlocked: Encontraste el comando secreto.</span>',
+        };
+
+        function addTermLine(html, cls = '') {
+          const line = document.createElement('div');
+          line.className = 'terminal-line' + (cls ? ' ' + cls : '');
+          line.innerHTML = html;
+          termOutput.appendChild(line);
+          line.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+
+        termInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            const cmd = this.value.trim().toLowerCase();
+            addTermLine('<span class="prompt">$</span> <span class="cmd">' + cmd + '</span>');
+            if (cmd in termResponses) {
+              setTimeout(() => {
+                addTermLine('<span class="response">' + termResponses[cmd] + '</span>');
+                if (cmd === 'secret') {
+                  showAchievement('🎉', 'Comando Secreto', '¡Encontraste un comando oculto!');
+                }
+              }, 300);
+            } else if (cmd) {
+              setTimeout(() => {
+                addTermLine('Comando no reconocido. Escribe <span class="response">help</span> para ver los disponibles.');
+              }, 300);
+            }
+            this.value = '';
+          }
+        });
+
+        // ---- Hidden button ----
+        document.getElementById('btnNo').addEventListener('click', function() {
+          this.classList.add('pressed');
+          this.textContent = '😏 Sabía que lo ibas a hacer...';
+          document.getElementById('hiddenResponse').classList.add('show');
+          showAchievement('😈', 'No pudiste resistirte', 'Era obvio que lo ibas a presionar');
+        });
+
+        // ---- Future checklist ----
+        document.querySelectorAll('.checklist-item:not(.completed)').forEach(item => {
+          item.addEventListener('click', function() {
+            this.classList.toggle('completed');
+            const box = this.querySelector('.check-box');
+            if (this.classList.contains('completed')) {
+              box.innerHTML = '<i class="fas fa-check"></i>';
+              showAchievement('✅', 'One step closer', '¡Tachaste un objetivo de la lista!');
+            } else {
+              box.innerHTML = '';
+            }
+          });
+        });
+
+        // ---- System status glitch ----
+        const sysLines = document.querySelectorAll('.system-line');
+        let sysIdx = 0;
+        function showSysLines() {
+          if (sysIdx < sysLines.length) {
+            sysLines[sysIdx].style.opacity = '1';
+            sysIdx++;
+            const delays = [0, 400, 400, 400, 400, 600];
+            setTimeout(showSysLines, delays[Math.min(sysIdx - 1, delays.length - 1)]);
+          }
+        }
+        const sysObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              sysLines.forEach(l => { l.style.opacity = '0'; l.style.transition = 'opacity .5s ease'; });
+              sysIdx = 0;
+              setTimeout(showSysLines, 400);
+              sysObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.3 });
+        const sysBox = document.getElementById('systemBox');
+        if (sysBox) sysObserver.observe(sysBox);
+
+        // ---- Deploy v2.0 ----
+        document.getElementById('btnDeploy').addEventListener('click', function() {
+          this.textContent = '⏳ Deploying...';
+          this.disabled = true;
+          this.style.cursor = 'wait';
+          startConfetti();
+          setTimeout(() => {
+            this.textContent = '✅ ¡Versión 2.0 desplegada!';
+            this.disabled = false;
+            this.style.cursor = 'pointer';
+            document.getElementById('changelog').classList.add('show');
+            document.querySelectorAll('.changelog-item').forEach(item => {
+              const delay = parseInt(item.dataset.delay) || 0;
+              setTimeout(() => { item.classList.add('show'); }, delay);
+            });
+            showAchievement('🚀', 'Versión 2.0', '¡El futuro comienza hoy!');
+          }, 2000);
+        });
+
+        // ---- Konami Code ----
+        const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+        let konamiIdx = 0;
+        document.addEventListener('keydown', function(e) {
+          const key = e.key;
+          if (key === konami[konamiIdx] || (konami[konamiIdx] === 'b' && key === 'b') || (konami[konamiIdx] === 'a' && key === 'a')) {
+            konamiIdx++;
+            if (konamiIdx === konami.length) {
+              konamiIdx = 0;
+              triggerKonami();
+            }
+          } else {
+            konamiIdx = 0;
+          }
+        });
+
+        function triggerKonami() {
+          showAchievement('🎮', 'Konami Code', '¡Modo hardcore activado! 💖');
+          startHeartRain();
+          startConfetti();
+        }
+
+        // ---- Toast / Achievement ----
+        function showAchievement(icon, title, sub) {
+          const container = document.getElementById('toastContainer');
+          const toast = document.createElement('div');
+          toast.className = 'toast';
+          toast.innerHTML = '<span class="toast-icon">' + icon + '</span><div><div class="toast-text"><strong>' + title + '</strong></div><div class="toast-sub">' + sub + '</div></div>';
+          container.appendChild(toast);
+          requestAnimationFrame(() => { toast.classList.add('show'); });
+          setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => { toast.remove(); }, 600);
+          }, 4000);
+        }
+
+        // ---- Confetti ----
+        function startConfetti() {
+          const container = document.getElementById('confettiContainer');
+          const colors = ['#ff6b9d','#c084fc','#fbbf24','#28c840','#ff5f57','#60a5fa','#f472b6'];
+          const shapes = ['■','●','★','♦','♥'];
+          for (let i = 0; i < 80; i++) {
+            const piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            piece.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+            piece.style.left = Math.random() * 100 + '%';
+            piece.style.color = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.fontSize = (8 + Math.random() * 14) + 'px';
+            piece.style.animationDuration = (2 + Math.random() * 3) + 's';
+            piece.style.animationDelay = (Math.random() * 2) + 's';
+            container.appendChild(piece);
+          }
+          setTimeout(() => { container.innerHTML = ''; }, 6000);
+        }
+
+        // ---- Heart Rain ----
+        function startHeartRain() {
+          const container = document.getElementById('heartRain');
+          const hearts = ['❤️','💖','💕','💗','🩷','♥️'];
+          for (let i = 0; i < 40; i++) {
+            const drop = document.createElement('div');
+            drop.className = 'heart-drop';
+            drop.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+            drop.style.left = Math.random() * 100 + '%';
+            drop.style.fontSize = (16 + Math.random() * 20) + 'px';
+            drop.style.animationDuration = (2 + Math.random() * 3) + 's';
+            drop.style.animationDelay = (Math.random() * 2) + 's';
+            container.appendChild(drop);
+          }
+          setTimeout(() => { container.innerHTML = ''; }, 6000);
+        }
+
+      }
+
+    })();
+  </script>
+
+</body>
+</html>
